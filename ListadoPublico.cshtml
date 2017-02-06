@@ -1,0 +1,33 @@
+﻿@model IEnumerable<Modelo.ArchivoDigital.Archivo>
+
+@{
+    ViewBag.Title = "Index";
+    Layout = "~/Views/Shared/_LayoutPublico.cshtml";
+}
+
+<h2>Listado de Archivos Cargados</h2>
+
+<table class="table">
+    <tr>
+        <th>
+            @Html.DisplayNameFor(model => model.Nombre)
+        </th>
+        <th></th>
+    </tr>
+
+@foreach (var item in Model) {
+    <tr>
+        <td>
+            @Html.DisplayFor(modelItem => item.Nombre)
+        </td>
+        <td>
+            @Html.ActionLink("Ver Archivo", "Descargar", new { id = item.ArchivoId })
+        </td>
+    </tr>
+}
+
+</table>
+<div>
+    @Html.ActionLink("Volver a Cargar", "Create", "CargarArchivoDigital") 
+</div>
+
