@@ -1,0 +1,84 @@
+﻿@model IEnumerable<DAL.ControlResidentes.Dtos.ListadoIngresoResidentes>
+
+@{
+    
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h2>Listado de Ingresos a Residentes</h2>
+
+<p>
+    @Html.ActionLink("Create New", "Create")
+</p>
+                      @using (Html.BeginForm())
+                      {    <div class="form-horizontal">
+                          <div class="form-group">
+                              <div class="col-md-3">
+                                  @Html.TextBox("Criterio", "", htmlAttributes: new { @class = "form-control" })
+                              </div>
+                              <div class="col-md-2">
+                                  <input type="submit" value="Buscar" class="btn btn-default" />
+                              </div>
+                          </div>
+                      </div>
+                      }
+<table class="table">
+    <tr>
+        <th>
+            @Html.DisplayNameFor(model => model.Sede)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Paciente)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.FechaIngreso)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.TipoAdiccion)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Locker)
+        <th>
+            @Html.DisplayNameFor(model => model.Cama)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Estado)
+        </th>
+        </th>
+        <th></th>
+    </tr>
+
+@foreach (var item in Model) {
+    <tr>
+        <td>
+            @Html.DisplayFor(modelItem => item.Sede)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Paciente)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.FechaIngreso)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.TipoAdiccion)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Locker)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Cama)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Estado)
+        </td>
+        <td>
+            @Html.ActionLink("Edit", "Edit", new { id=item.IngresoResidenteId }) |
+            @Html.ActionLink("Locker", "AsignarLocker", new { IngresoId = item.IngresoResidenteId }) |
+            @Html.ActionLink("Cama", "AsignarCama", new { IngresoId = item.IngresoResidenteId,SedeId=0,EdificioId=0,PisoId=0 }) |
+            @Html.ActionLink("Details", "Details", new { id=item.IngresoResidenteId }) |
+            @Html.ActionLink("Delete", "Delete", new { id=item.IngresoResidenteId })
+        </td>
+    </tr>
+}
+
+</table>
