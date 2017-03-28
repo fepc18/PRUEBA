@@ -1,0 +1,64 @@
+﻿@model IEnumerable<Modelo.ActivosFijos.RevisionActivoFijo>
+
+@{
+    ViewBag.Title = "Index";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h2>Index</h2>
+
+<p>
+    @Html.ActionLink("Create New", "Create")
+</p>
+<table class="table">
+    <tr>
+        <th>
+            @Html.DisplayNameFor(model => model.Sede.Codigo)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.UbicacionDestino.Codigo)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Fecha)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Observacion)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Usuario)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.FechaOperacion)
+        </th>
+        <th></th>
+    </tr>
+
+@foreach (var item in Model) {
+    <tr>
+        <td>
+            @Html.DisplayFor(modelItem => item.Sede.Codigo)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.UbicacionDestino.Codigo)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Fecha)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Observacion)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Usuario)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.FechaOperacion)
+        </td>
+        <td>
+            @Html.ActionLink("Edit", "Edit", new { id=item.RevisionActivoFijoId }) |
+            @Html.ActionLink("Details", "Details", new { id=item.RevisionActivoFijoId }) |
+            @Html.ActionLink("Delete", "Delete", new { id=item.RevisionActivoFijoId })
+        </td>
+    </tr>
+}
+
+</table>

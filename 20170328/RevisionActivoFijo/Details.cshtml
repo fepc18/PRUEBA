@@ -1,0 +1,67 @@
+﻿@model Modelo.ActivosFijos.RevisionActivoFijo
+
+@{
+    ViewBag.Title = "Details";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h2>Details</h2>
+
+<div>
+    <h4>RevisionActivoFijo</h4>
+	<hr />
+    <dl class="dl-horizontal">
+        <dt>
+            @Html.DisplayNameFor(model => model.Sede.Codigo)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Sede.Codigo)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.UbicacionDestino.Codigo)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.UbicacionDestino.Codigo)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Fecha)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Fecha)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Observacion)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Observacion)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Usuario)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Usuario)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.FechaOperacion)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.FechaOperacion)
+        </dd>
+
+    </dl>
+</div>
+<p>
+    @Html.ActionLink("Edit", "Edit", new { id = Model.RevisionActivoFijoId }) |
+    @Html.ActionLink("Back to List", "Index")
+</p>
