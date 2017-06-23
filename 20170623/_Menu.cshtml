@@ -1,0 +1,103 @@
+﻿@model  Modelo.Seguridad.MenuControlResidente
+
+    <div class="navbar navbar-inverse navbar-fixed-top">
+        <div class="container">
+            <div class="navbar-header">
+                <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                </button>
+                @Html.ActionLink("Control Residentes", "Index", "Home", new { area = "" }, new { @class = "navbar-brand" })
+            </div>
+           
+            <div class="navbar-collapse collapse">
+
+@if (System.Web.HttpContext.Current.Session["User"] != null)
+            {
+                <ul class="nav navbar-nav">                    
+                </ul>
+                <ul class="nav navbar-nav navbar-left">
+                        <li class="dropdown">
+                            <a href="#" class="dropdown-toggle" data-toggle="dropdown">
+                                Operaciones <b class="caret"></b>
+                            </a>
+                            <ul class="dropdown-menu">
+                                @if (Model.IngresoResidente)
+                                {
+                                    <li>@Html.ActionLink("Ingreso de Residentes", "Index", "IngresoResidente")</li>                                
+                                }@if (Model.LlamadaAutorizada)
+                                {
+                                <li>@Html.ActionLink("Llamadas/Visitas Autorizadas", "ListadoPacientes", "LlamadaAutorizada")</li>
+                                }
+                                @if (Model.VisitaResidente)
+                                {
+                                <li>@Html.ActionLink("Registrar Visita", "ListadoPacientes", "VisitaResidente")</li>
+                                }
+                                @if (Model.LlamadaResidente)
+                                {
+                                <li>@Html.ActionLink("Registrar Llamada", "ListadoPacientes", "LlamadaResidente")</li> 
+                                }
+                                <li>@Html.ActionLink("Movimiento de Medicamentos", "Index", "MovimientoInventarioResidente")</li> 
+                            </ul>
+                        </li>
+                 </ul>
+
+                <ul class="nav navbar-nav navbar-left">
+                    <li class="dropdown">
+                        <a href="#" class="dropdown-toggle" data-toggle="dropdown">
+                            Configuración <b class="caret"></b>
+                        </a>
+                        <ul class="dropdown-menu">
+                            @if (Model.TipoAdiccion)
+                            {
+                            <li>@Html.ActionLink("Tipo Adicciones", "Index", "TipoAdiccion")</li>
+                            }
+                            @if (Model.TipoSustancias)
+                            {
+                            <li>@Html.ActionLink("Tipo Sustancias", "Index", "TipoSustancias")</li>
+                            }
+
+                           
+                                @if (Model.Lockers)
+                                {
+                            <li class="divider"></li>
+                            <li>@Html.ActionLink("Lockers", "Index", "Locker")</li>
+                                }
+                            <li class="divider"></li>
+                            @if (Model.Cama)
+                            {
+                            <li>@Html.ActionLink("Camas", "Index", "Cama")</li>                            
+                            }
+                            @if (Model.Habitacion)
+                            {
+                            <li>@Html.ActionLink("Habitación", "Index", "Habitacion")</li>                            
+                            }
+                            @if (Model.TipoHabitacion)
+                            {
+                            <li>@Html.ActionLink("Tipo Habitaciones", "Index", "TipoHabitacion")</li>                            
+                            }
+                            @if (Model.Piso)
+                            {
+                            <li>@Html.ActionLink("Pisos", "Index", "Piso")</li>                            
+                            }
+                            @if (Model.Edificio)
+                            {
+                            <li>@Html.ActionLink("Edificios", "Index", "Edificio")</li>                            
+                            }
+                            @if (Model.Sede)
+                            {
+                            <li>@Html.ActionLink("Sedes", "Index", "Sede")</li>                            
+                            }
+                        </ul>
+                    </li>
+                </ul>
+               
+}
+                @Html.Partial("_LoginPartial")
+            </div>
+            
+        </div>
+    </div>
+    
+    

@@ -1,0 +1,106 @@
+﻿@model Financy.Entities.FiltrosSaldosBodeda
+
+@{
+    ViewBag.Title = "SaldosBodega";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h3>Reporte: Saldos por Bodega</h3>
+@using (Html.BeginForm("GenerarReporteSaldosBodega", "MovimientoInventario", FormMethod.Post, new { Id = "Form1" }))
+
+{
+    <div class="form-horizontal">
+        <div class="form-group">
+            @Html.Label("Bodega: ", htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.DropDownList("BodegaId", null, htmlAttributes: new { @class = "form-control" })
+                @Html.ValidationMessageFor(model => model.Bodega.BodegaId, "", new { @class = "text-danger" })
+            </div>
+        </div>
+        
+        <div class="form-group">
+            @Html.Label("Ejercicio: ", htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-2">
+                @Html.DropDownListFor(m => m.Periodo.Ejercicio,
+                new SelectList(new List<object> {
+                    new { value = 2016 , text = "2016"} ,
+                    new { value = 2017 , text = "2017"} ,
+                    new { value = 2018 , text = "2018"} ,
+                    new { value = 2019 , text = "2019"} ,
+                    new { value = 2020 , text = "2020"} ,
+                    new { value = 2021 , text = "2021"} ,
+                    new { value = 2022 , text = "2022"} ,
+                    new { value = 2023 , text = "2023"} },
+                    "value", "text")
+                , new { @class = "form-control" })
+                @Html.ValidationMessageFor(m => m.Periodo.Ejercicio, String.Empty, new { @class = "help-inline" })
+            </div>
+        </div>
+
+        
+        <div class="form-group">
+            @Html.Label("Periodo: ", htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.DropDownList("PeriodoId", null, htmlAttributes: new { @class = "form-control" })
+                @Html.ValidationMessageFor(model => model.Periodo, "", new { @class = "text-danger" })
+            </div>
+        </div>
+        <br />
+        <hr />
+        </div>
+        <div class="form-group">
+            <div class="col-md-offset-2 col-md-10">
+                <input type="submit" value="Generar" class="btn btn-success" />
+            </div>
+        </div>
+        }
+
+@section scripts
+{
+
+    <script type="text/javascript">
+
+    //+++ EVENTO PARA LLENAR LOS LOTES DE UN PRODUCTO
+        $("#Periodo_Ejercicio").change(function () {
+        //$("productForm").submit();
+        $("#PeriodoId").empty();
+        $.ajax({
+            type: 'POST',
+            //Llamado al metodo en el controlador
+            url: '@Url.Action("GetPeriodosList", "MovimientoInventario")',
+
+            dataType: 'json',
+            //Parametros que se envian al metodo del controlador
+            data: { idEjercicio: $("#Periodo_Ejercicio").val() },
+            //En caso de resultado exitoso
+            success: function (Lotes) {
+                
+                    if (Lotes.length == 0) {
+                        $("#PeriodoId").append('<option value="0">No existen periodos creados</option>');
+                    }
+                    else {
+                        //Se agrega el elemento vacio para poder desplegar que seleccione una opcion
+                        $("#PeriodoId").append('<option value="0">Seleccione un Periodo</option>');
+                        $.each(Lotes, function (i, Lote) {
+                            $("#PeriodoId").append('<option value="' + Lote.Value + '">' +
+                             Lote.Text + '</option>');
+                        });
+                    }                
+
+                //Recargar el plugin para que tenga la funcionalidad del componente
+
+            },
+            //Mensaje de error en caso de fallo
+            error: function (ex) {
+                alert('Failed to retrieve states.' + ex);
+            }
+        });
+        return false;
+    });
+    </script>
+
+
+
+
+}
+  

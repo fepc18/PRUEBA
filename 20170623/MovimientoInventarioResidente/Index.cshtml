@@ -1,0 +1,52 @@
+﻿@model IEnumerable<Financy.Entities.MovimientoInventarioResidente>
+
+@{
+    ViewBag.Title = "Index";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h2>Index</h2>
+
+<p>
+    @Html.ActionLink("Create New", "Create")
+</p>
+<table class="table">
+    <tr>
+        <th>
+            @Html.DisplayNameFor(model => model.MovimientoInventario.Consecutivo)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.PacienteId)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Usuario)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.FechaOperacion)
+        </th>
+        <th></th>
+    </tr>
+
+@foreach (var item in Model) {
+    <tr>
+        <td>
+            @Html.DisplayFor(modelItem => item.MovimientoInventario.Consecutivo)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.PacienteId)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Usuario)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.FechaOperacion)
+        </td>
+        <td>
+            @Html.ActionLink("Edit", "Edit", new { id=item.MovimientoInventarioResidenteId }) |
+            @Html.ActionLink("Details", "Details", new { id=item.MovimientoInventarioResidenteId }) |
+            @Html.ActionLink("Delete", "Delete", new { id=item.MovimientoInventarioResidenteId })
+        </td>
+    </tr>
+}
+
+</table>

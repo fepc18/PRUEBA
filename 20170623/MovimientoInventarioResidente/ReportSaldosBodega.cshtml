@@ -1,0 +1,33 @@
+﻿@model IEnumerable<DAL.Inventario.Dtos.ReporteSaldosBodeda>
+
+@{
+    ViewBag.Title = "Index";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+
+<table class="table">
+   
+
+    @foreach (var item in Model)
+    {
+        <tr border="1">
+            <td>
+                @Html.DisplayFor(modelItem => item.Producto)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Lote)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Stock)
+            </td>
+
+            <td>
+                @Html.DisplayFor(modelItem => item.Valor)
+            </td>            
+        </tr>
+    }
+
+</table>
+
+

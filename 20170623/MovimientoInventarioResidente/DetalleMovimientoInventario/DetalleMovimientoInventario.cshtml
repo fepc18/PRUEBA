@@ -1,0 +1,90 @@
+﻿@model IEnumerable<Financy.Entities.Dtos.MovimientoCompleto>
+
+@{
+    ViewBag.Title = "Index";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h2>Index</h2>
+
+<p>
+    @Html.ActionLink("Crear Nuevo", "Create")
+</p>
+<table class="table">
+    <tr>
+        <th>
+            @Html.DisplayNameFor(model => model.MovimientoInventarioId)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Consecutivo)
+        </th>
+        <th>
+            Bodega
+        </th>
+        <th>
+            Estado
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Tercero.Nit)
+        </th>
+        <th>
+            Tipo Movimiento
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Descripcion)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.DocumentoReferencia)
+        </th>        
+        <th>
+            @Html.DisplayNameFor(model => model.Usuario)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.FechaOperacion)
+        </th>
+        <th></th>
+    </tr>
+
+@foreach (var item in Model) {
+    <tr>
+        <td>
+            @Html.DisplayFor(modelItem => item.MovimientoInventarioId)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Consecutivo)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Bodega.Nombre)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.EstadoMovimiento.Descripcion)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Tercero.Nit )
+            @Html.DisplayFor(modelItem => item.Tercero.RazonSocial)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.TipoMovimiento.Descripcion)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Descripcion)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.DocumentoReferencia)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Usuario)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.FechaOperacion)
+        </td>
+        <td>
+            @Html.ActionLink("Editar", "Edit", new { id=item.MovimientoInventarioId }) |
+            @Html.ActionLink("Detalle", "Details", new { id=item.MovimientoInventarioId }) |
+            @Html.ActionLink("Eliminar", "Delete", new { id=item.MovimientoInventarioId })  |
+            @Html.ActionLink("Productos", "ProductosMovimiento", new { id = item.MovimientoInventarioId })
+        </td>
+    </tr>
+}
+
+</table>

@@ -1,0 +1,167 @@
+﻿@model Financy.Entities.MovimientoInventarioDetalle
+
+@{
+    ViewBag.Title = "Create";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h2>Agregar Producto</h2>
+
+@using (Html.BeginForm("SaveDetalle", "MovimientoInventario", FormMethod.Post, new { Id = "Form1" }))
+
+{
+    @Html.AntiForgeryToken()
+    @Html.HiddenFor(model => model.MovimientoInventarioId)    
+    <div class="form-horizontal">
+        
+        <hr />
+        @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+        @using (Html.BeginForm("LoteList", "MovimientoInventario", FormMethod.Post, new { Id = "productForm" }))
+
+        {
+            <div class="form-group">
+                @Html.Label("Producto", htmlAttributes: new { @class = "control-label col-md-2" })
+                <div class="col-md-10">                
+                    @Html.DropDownList("ProductoId", null, "-- Seleccione--", htmlAttributes: new { @class = "form-control" })
+                    @Html.ValidationMessageFor(model => model.ProductoId, "", new { @class = "text-danger" })
+                </div>
+            
+            </div>
+            
+        }
+        <div class="form-group">
+            @Html.Label("Lote", htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                
+                @Html.DropDownListFor(model => model.LoteId, new List<SelectListItem> {
+                                                         new SelectListItem { Text = "", Value = "" }}, "-- Seleccione--", htmlAttributes: new { @class = "form-control" })
+                @Html.ValidationMessageFor(model => model.LoteId, "", new { @class = "text-danger" })
+            </div>
+        </div>
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.Cantidad, htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.EditorFor(model => model.Cantidad, new { htmlAttributes = new { @class = "form-control" } })
+                @Html.ValidationMessageFor(model => model.Cantidad, "", new { @class = "text-danger" })
+            </div>
+        </div>
+
+        <div class="form-group">
+            @Html.Label("Costo", htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.EditorFor(model => model.Valor, new { htmlAttributes = new { @class = "form-control" } })
+                @Html.ValidationMessageFor(model => model.Valor, "", new { @class = "text-danger" })
+            </div>
+        </div>
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.Observacion, htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.EditorFor(model => model.Observacion, new { htmlAttributes = new { @class = "form-control" } })
+                @Html.ValidationMessageFor(model => model.Observacion, "", new { @class = "text-danger" })
+            </div>
+        </div>
+
+        <div class="form-group">
+            <div class="col-md-offset-2 col-md-10">
+                <input type="submit" value="Crear" class="btn btn-success" />
+            </div>
+        </div>
+    </div>
+    
+}
+
+<div>
+    @Html.ActionLink("Regresar al listado", "Index")
+</div>
+
+@section scripts
+{
+<script type="text/javascript">
+
+    //+++ EVENTO PARA LLENAR LOS LOTES DE UN PRODUCTO
+    $("#ProductoId").change(function () {        
+        //$("productForm").submit();
+        $("#LoteId").empty();
+        $.ajax({
+            type: 'POST',
+            //Llamado al metodo en el controlador
+            url: '@Url.Action("GetLotesList", "MovimientoInventario")',
+
+            dataType: 'json',
+            //Parametros que se envian al metodo del controlador
+            data: { idProducto: $("#ProductoId").val(), idMovimiento: $("#MovimientoInventarioId").val() },
+            //En caso de resultado exitoso
+            success: function (Lotes) {
+                if (Lotes.Result == null) {
+                    if (Lotes.length == 0) {
+                        $("#LoteId").append('<option value="0">No existen lotes creados</option>');
+                    }
+                    else {
+                        //Se agrega el elemento vacio para poder desplegar que seleccione una opcion
+                        $("#LoteId").append('<option value="0">Seleccione un Lote</option>');
+                        $.each(Lotes, function (i, Lote) {
+                            $("#LoteId").append('<option value="' + Lote.Value + '">' +
+                             Lote.Text + '</option>');
+                        });
+                    }
+                }
+                else {
+                    if (Lotes.Result == "Successed") {
+                        $("#LoteId").append('<option value="0">Producto no Loteado</option>');
+                        $("#Valor").val(Lotes.Costo);
+                    }
+                    else
+                        alert(Lotes.Result);
+                }
+                 
+                //Recargar el plugin para que tenga la funcionalidad del componente
+                
+            },
+            //Mensaje de error en caso de fallo
+            error: function (ex) {
+                alert('Failed to retrieve states.' + ex);
+            }  
+        });
+        return false;
+    });
+    //++++ EVENTO PARA TRAER EL COSTO AL SELECCIONAR UN LOTE
+    $("#LoteId").change(function () {
+        //$("productForm").submit();
+        //$("#Valor").empty();
+        //alert(  $("#ProductoId").val()+""+
+        // $("#LoteId").val()+""+
+        // $("#MovimientoInventarioId").val());
+        $.ajax({
+            type: 'POST',
+            //Llamado al metodo en el controlador
+            url: '@Url.Action("GetCosto", "MovimientoInventario")',
+            dataType: 'json',
+            //Parametros que se envian al metodo del controlador
+            data: {
+                idProducto: $("#ProductoId").val(),
+                idLote: $("#LoteId").val(),
+                idMovimiento: $("#MovimientoInventarioId").val()
+            }
+            //En caso de resultado exitoso
+           
+        })
+            .done(function (data, textStatus, jqXHR) {
+                if (console && console.log) {
+                    if (data.Result == "Successed")
+                        $("#Valor").val(data.Costo);
+                    else
+                        alert(data.Result);
+                }
+            })
+            .fail(function (jqXHR, textStatus, errorThrown) {
+                if (console && console.log) {
+                    alert("La solicitud a fallado: " + textStatus);
+                }
+            });
+        
+        return false;
+    });
+</script> 
+}  

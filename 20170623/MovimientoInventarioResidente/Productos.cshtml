@@ -1,0 +1,111 @@
+﻿@model Financy.Entities.Dtos.MovimientoCompleto
+
+@{
+    ViewBag.Title = "Details";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+@Html.HiddenFor(x => x.MovimientoInventario.MovimientoInventarioId)
+<h4>Consecutivo: @Html.DisplayFor(model => model.MovimientoInventario.Consecutivo) | @Html.DisplayFor(model => model.MovimientoInventario.TipoMovimiento.Codigo) - @Html.DisplayFor(model => model.MovimientoInventario.TipoMovimiento.Descripcion)                </h4>
+<div>
+    
+
+    <table>
+        <tr>
+            <td class="col-lg-1">
+                <b>Bodega:</b>
+            </td>
+            <td class="col-lg-1">
+                @Html.DisplayFor(model => model.MovimientoInventario.Bodega.Nombre)
+            </td>
+            <td class="col-lg-1">
+                <b>@Html.DisplayNameFor(model => model.MovimientoInventario.Tercero.Nit)</b>
+            </td>
+            <td class="col-lg-3">
+                @Html.DisplayFor(model => model.MovimientoInventario.Tercero.Nit) - @Html.DisplayFor(model => model.MovimientoInventario.Tercero.RazonSocial)
+            </td>
+            
+            <td class="col-lg-1">
+                <b>Estado:</b>
+            </td>
+            <td class="col-lg-1">
+                @Html.DisplayFor(model => model.MovimientoInventario.EstadoMovimiento.Descripcion)
+            </td>
+            <td class="col-lg-1">
+                <b>@Html.DisplayNameFor(model => model.MovimientoInventario.DocumentoReferencia)</b>
+            </td>
+            <td class="col-lg-1">
+                @Html.DisplayFor(model => model.MovimientoInventario.DocumentoReferencia)
+            </td>
+        </tr>
+        
+
+</table>
+
+    
+</div>
+<hr />
+@Html.ActionLink("Agregar Producto", "CreateDetalle", new { id = Model.MovimientoInventario.MovimientoInventarioId }, new { @class = "btn btn-success" })
+<br />
+<br />
+<table class="table" >
+    <tr class="table-bordered">
+        <td>
+            <b>Id</b>
+        </td>
+        <td>
+            <b>Producto</b>
+            
+        </td>
+        <td>
+            <b>Lote</b>
+        </td>
+        <td>
+            <b>Cantidad</b>
+        </td>
+        <td>
+            <b>Costo</b>
+        </td>
+        <td>
+            <b>Observación</b>
+        </td>
+        <td>
+        </td>
+    </tr>
+    
+    @foreach (var item in Model.DetallesMovimiento)
+    {
+        <tr border="1">
+            <td>
+                @Html.DisplayFor(modelItem => item.MovimientoInventarioDetalleId)
+            </td>
+            
+            <td>
+                @Html.DisplayFor(modelItem => item.Producto.Referencia) -
+                @Html.DisplayFor(modelItem => item.Producto.Descripcion)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Lote.NumeroLote)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Cantidad)
+            </td>
+            
+            <td>
+                @Html.DisplayFor(modelItem => item.Valor)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Observacion)
+            </td>
+            <td>
+                @Html.ActionLink("Eliminar", "DeleteDetalle", new { id = item.MovimientoInventarioDetalleId })
+            </td>
+        </tr>
+    }
+
+</table>
+
+<p>
+    @Html.ActionLink("Cerrar Movimiento", "CerrarMovimiento", new { id = Model.MovimientoInventario.MovimientoInventarioId },new { onclick = "return confirm('Esta seguro de cerrar el movimiento? Al cerrarlo no podrá ser modificado.');" })  |
+    @Html.ActionLink("Lista de Movimientos", "Index")
+</p>

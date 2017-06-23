@@ -1,0 +1,51 @@
+﻿@model Financy.Entities.MovimientoInventarioResidente
+
+@{
+    ViewBag.Title = "Details";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h2>Details</h2>
+
+<div>
+    <h4>MovimientoInventarioResidente</h4>
+	<hr />
+    <dl class="dl-horizontal">
+        <dt>
+            @Html.DisplayNameFor(model => model.MovimientoInventario.Consecutivo)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.MovimientoInventario.Consecutivo)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.PacienteId)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.PacienteId)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Usuario)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Usuario)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.FechaOperacion)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.FechaOperacion)
+        </dd>
+
+    </dl>
+</div>
+<p>
+    @Html.ActionLink("Edit", "Edit", new { id = Model.MovimientoInventarioResidenteId }) |
+    @Html.ActionLink("Back to List", "Index")
+</p>

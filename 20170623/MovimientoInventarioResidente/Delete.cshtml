@@ -1,0 +1,57 @@
+﻿@model Financy.Entities.MovimientoInventarioResidente
+
+@{
+    ViewBag.Title = "Delete";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h2>Delete</h2>
+
+<h3>Are you sure you want to delete this?</h3>
+<div>
+    <h4>MovimientoInventarioResidente</h4>
+    <hr />
+    <dl class="dl-horizontal">
+        <dt>
+            @Html.DisplayNameFor(model => model.MovimientoInventario.Consecutivo)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.MovimientoInventario.Consecutivo)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.PacienteId)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.PacienteId)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Usuario)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Usuario)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.FechaOperacion)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.FechaOperacion)
+        </dd>
+
+    </dl>
+
+    @using (Html.BeginForm()) {
+        @Html.AntiForgeryToken()
+
+        <div class="form-actions no-color">
+            <input type="submit" value="Delete" class="btn btn-default" /> |
+            @Html.ActionLink("Back to List", "Index")
+        </div>
+    }
+</div>
